@@ -1,0 +1,109 @@
+✅ STEP 1: Create Common Module
+
+Go to your project root (where all services exist)
+
+👉 Using Maven:
+
+	mvn archetype:generate -DgroupId=com.common -DartifactId=common-dto -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+
+
+
+✅ STEP 2: Update pom.xml of common-dto
+
+Remove everything unnecessary and keep simple:
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.common</groupId>
+    <artifactId>common-dto</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
+
+</project>
+
+
+
+
+✅ STEP 3: Create DTO Class
+
+Inside:
+
+common-dto/src/main/java/com/common/dto/OrderEvent.java
+
+package com.common.dto;
+
+public class OrderEvent {
+
+    private Long orderId;
+    private String product;
+    private String status;
+
+    //no-args constructor and all-args constructor
+
+    // getters & setters
+}
+
+
+
+
+✅ STEP 4: Install Common Module
+
+Run this inside common-dto folder:
+
+mvn clean install
+
+👉 This installs JAR into your local Maven repo
+
+
+
+✅ STEP 5: Add Dependency in ALL Services
+
+Add this in:
+
+order-service
+payment-service
+inventory-service
+<dependency>
+    <groupId>com.common</groupId>
+    <artifactId>common-dto</artifactId>
+    <version>1.0</version>
+</dependency>
+
+
+
+✅ STEP 6: Replace DTO in ALL Services
+
+❌ REMOVE old DTO:
+
+com.order_service.dto.OrderEvent
+com.payment_service.dto.OrderEvent
+com.inventory_service.dto.OrderEvent
+
+✅ USE common DTO:
+
+import com.common.dto.OrderEvent;
+
+
+👉 In:
+
+Consumers
+Producers
+Services
+
+
+
+
+
+Expected Flow
+
+Order → CREATED
+Payment → PAYMENT_SUCCESS
+Inventory → INVENTORY_FAILED
+Payment → REFUND_DONE
+Order → FINAL STATUS
