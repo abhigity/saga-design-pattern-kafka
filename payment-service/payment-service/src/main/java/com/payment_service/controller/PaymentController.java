@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/payment")
 public class PaymentController {
 
+    //using in feign client in order service
+
     @GetMapping("/pay/{orderId}")
     public String makePayment(@PathVariable Long orderId) {
         return "Payment successful for Order ID: " + orderId;
